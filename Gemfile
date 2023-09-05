@@ -77,3 +77,4 @@ end
 gem "devise", "~> 4.9"
 
 gem "tailwindcss-rails", "~> 2.0"
+gem "name_of_person", "~> 1.1.2"
