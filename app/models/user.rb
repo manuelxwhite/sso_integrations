@@ -12,7 +12,7 @@ class User < ApplicationRecord
       user.email = provider_data.info.email
       user.password = Devise.friendly_token[0, 20]
       user.name = provider_data.info.name
-      user.username = provider_data.info.email.split('@')[0]
+      user.username = provider_data.info.email
     end
   end
 end

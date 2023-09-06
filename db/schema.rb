@@ -10,9 +10,41 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_05_235907) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_06_055907) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "sso_authorizations", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "sso_client_id", null: false
+    t.string "access_token", null: false
+    t.string "refresh_token"
+    t.datetime "expires_at"
+    t.string "scope"
+    t.string "state"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["sso_client_id"], name: "index_sso_authorizations_on_sso_client_id"
+    t.index ["user_id"], name: "index_sso_authorizations_on_user_id"
+  end
+
+  create_table "sso_clients", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "redirect_uri", null: false
+    t.string "site_url", null: false
+    t.string "token_url", null: false
+    t.string "authorize_url", null: false
+    t.string "user_info_url", null: false
+    t.string "user_info_fields", null: false
+    t.string "user_info_id_field", null: false
+    t.string "user_info_username_field", null: false
+    t.string "user_info_email_field", null: false
+    t.string "user_info_first_name_field", null: false
+    t.string "user_info_last_name_field", null: false
+    t.string "open_id_connect_endpoint", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "first_name", null: false
@@ -28,9 +60,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_05_235907) do
     t.datetime "remember_created_at"
     t.string "provider", limit: 50, default: "", null: false
     t.string "uid", limit: 50, default: "", null: false
+    t.boolean "admin", default: false, null: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["username"], name: "index_users_on_username", unique: true
   end
 
+  add_foreign_key "sso_authorizations", "sso_clients"
+  add_foreign_key "sso_authorizations", "users"
 end
