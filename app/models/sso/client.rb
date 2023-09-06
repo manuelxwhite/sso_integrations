@@ -19,6 +19,10 @@ module Sso
       OmniAuth::Strategies::OpenIDConnect.new(omniauth_config)
     end
 
+    def has_client_and_secret?
+        client_id.present? && client_secret.present?
+    end
+
     private
 
     def client_id
