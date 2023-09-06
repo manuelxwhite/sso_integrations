@@ -68,5 +68,10 @@ Rails.application.configure do
   # Uncomment if you wish to allow Action Cable access from any origin.
   # config.action_cable.disable_request_forgery_protection = true
 
-  config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+  #Development ENV Variables, this should be set in staging and production
+  ENV["GOOGLE_AUTH2_CLIENT_ID"] = "538597505255-2cd70iu0fjl18o146teed4bffmqskd8s.apps.googleusercontent.com"
+  ENV["GOOGLE_AUTH2_CLIENT_SECRET"] = "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"
+  ENV["OKTA_CLIENT_ID"] = "0oab4lh7wn35gKY2K5d7"
+  ENV["OKTA_CLIENT_SECRET"] = "fUnohhJPY7j70FER995YuSSe7gNt6xZcwCcEilg8jRf1D7DojBtmf26tZ7VEbIiv"
+  ENV["OKTA_ORG_URL"] = "https://okta-dev-29807662.okta.com"
 end
