@@ -97,7 +97,7 @@ To load SSO provider configurations at initialization, we use the `sso_clients.y
       :authorize_url: '/o/oauth2/auth'
       :token_url: '/o/oauth2/token'
       :userinfo_endpoint: 'https://www.googleapis.com/oauth2/v1/userinfo'
-
+```
 In the above example, replace your_google_client_id with the actual client ID from Google. You can add more providers following the same format.
 
 
