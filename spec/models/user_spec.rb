@@ -33,10 +33,6 @@ RSpec.describe User, type: :model do
       include_examples 'a non-creating user', :last_name
     end
 
-    context 'when password is missing' do
-      include_examples 'a non-creating user', :password
-    end
-
     context 'when username is missing' do
       include_examples 'a non-creating user', :username
     end

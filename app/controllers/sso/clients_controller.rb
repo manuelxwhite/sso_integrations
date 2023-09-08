@@ -1,5 +1,7 @@
 module Sso
   class ClientsController < ApplicationController
+    before_action :authenticate_user!
+    before_action :require_admin
     before_action :set_sso_client, only: %i[show edit update destroy]
 
     # GET /sso/clients or /sso/clients.json
@@ -70,6 +72,12 @@ module Sso
                                          :user_info_fields, :user_info_id_field, :user_info_username_field,
                                          :user_info_email_field, :user_info_first_name_field,
                                          :user_info_last_name_field, :open_id_connect_endpoint)
+    end
+
+    def require_admin
+      unless current_user && current_user.admin?
+        redirect_to root_path, alert: "You must be an admin to access this page."
+      end
     end
   end
 end
