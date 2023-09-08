@@ -4,6 +4,10 @@ module Sso
               :user_info_id_field, :user_info_username_field, :user_info_email_field, :user_info_first_name_field,
               :user_info_last_name_field, :open_id_connect_endpoint, presence: true
 
+    validates :name, uniqueness: true
+
+    after_save :save_sso_clients_yml
+
     def omniauth_config
       {
         name:,
@@ -19,8 +23,12 @@ module Sso
       OmniAuth::Strategies::OpenIDConnect.new(omniauth_config)
     end
 
-    def has_client_and_secret?
-        client_id.present? && client_secret.present?
+    def client_and_secret?
+      client_id.present? && client_secret.present?
+    end
+
+    def save_sso_clients_yml
+      Sso::StaticFile.save_clients_yml
     end
 
     private
@@ -30,7 +38,7 @@ module Sso
     end
 
     def client_secret
-      ENV["#{name.upcase}_SECRET"]
+      ENV["#{name.upcase}_CLIENT_SECRET"]
     end
 
     def static_fields
@@ -41,7 +49,6 @@ module Sso
         discovery: true
       }
     end
-
 
     def client_options
       {

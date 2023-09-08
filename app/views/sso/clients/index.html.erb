@@ -1,55 +1,56 @@
 
-<div class="w-full relative overflow-x-auto shadow-md sm:rounded-lg">
-    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-            <tr>
-                <th scope="col" class="px-6 py-3">
-                    Client name
-                </th>
-                <th scope="col" class="px-6 py-3">
-                    Has client and secret?
-                </th>
-                <th scope="col" class="px-6 py-3">
-                    Authorizations
-                </th>
-                <th scope="col" class="px-6 py-3">
-                    Last update
-                </th>
-                <th scope="col" class="px-6 py-3">
-                    Actions
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-        <% @clients.each do |client| %>
-            <tr class="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
-                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                    <%= client.name %>
-                </th>
-                <td class="px-6 py-4">
-                    <% if client.has_client_and_secret? %>
-                        <span class="inline-flex items-center bg-green-100 text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-green-900 dark:text-green-300">
-                            <span class="w-2 h-2 mr-1 bg-green-500 rounded-full"></span>
-                            Data is Available
+<div class="w-1/2 mx-auto">
+    <h2 class="text-4xl font-bold dark:text-white mx-auto mb-8">SSO Clients</h2>
+
+    <%= button_tag "Add SSO Client", type: "button", data: { drawer_target: "drawer-create-product", drawer_show: "drawer-create-product" }, class: "inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 mb-8" %>
+
+    <div class="w-full relative overflow-x-auto shadow-md sm:rounded-lg">
+        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <tr>
+                    <th scope="col" class="px-6 py-3">
+                        SSO Client
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Has client and secret?
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Last update
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Actions
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+            <% @sso_clients.each do |client| %>
+                <% presenter = ClientPresenter.new(client) %>
+                <tr class="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
+                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+
+                        <%= link_to client.name, client, class: "text-blue-600 hover:underline" %>
+                    </th>
+                    <td class="px-6 py-4">
+                        <span class="<%= presenter.outer_class %>">
+                        <span class="<%= presenter.inner_class %>"></span>
+                            <%= presenter.status_text %>
                         </span>
-                    <% else %>
-                        <span class="inline-flex items-center bg-red-100 text-red-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-red-900 dark:text-red-300">
-                            <span class="w-2 h-2 mr-1 bg-red-500 rounded-full"></span>
-                            Data Unavailable
-                        </span>
-                    <% end %>
-                </td>
-                <td class="px-6 py-4">
-                    0
-                </td>
-                <td class="px-6 py-4">
-                   <%= time_ago_in_words client.updated_at %>
-                </td>
-                <td class="px-6 py-4">
-                    <%= link_to 'Edit', edit_sso_client_path(client), class: "text-blue-600 hover:underline" %>
-                </td>
-            </tr>
-        <% end %>  
-        </tbody>
-    </table>
+
+                    </td>
+                    <td class="px-6 py-4">
+                    <%= time_ago_in_words client.updated_at %>
+                    </td>
+                    <td class="px-6 py-4">
+                        <%= link_to 'Edit', edit_sso_client_path(client), class: "text-blue-600 hover:underline" %>
+                    </td>
+                </tr>
+            <% end %>  
+            </tbody>
+        </table>
+    </div>
+    <%= render "create_drawer" %>
+
+
+
+
 </div>

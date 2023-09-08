@@ -7,33 +7,49 @@
 #   Character.create(name: "Luke", movie: movies.first)
 
 Sso::Client.create(
-    name: "google",
-    redirect_uri: "http://localhost:3000/users/auth/google_oauth2/callback",
-    site_url: "https://accounts.google.com",
-    token_url: "https://oauth2.googleapis.com/token",
-    authorize_url: "https://accounts.google.com/o/oauth2/auth",
-    user_info_url: "https://openidconnect.googleapis.com/v1/userinfo",
-    user_info_fields: "id, email, name, given_name, family_name",
-    user_info_id_field: "id",
-    user_info_username_field: "email",
-    user_info_email_field: "email",
-    user_info_first_name_field: "given_name",
-    user_info_last_name_field: "family_name",
-    open_id_connect_endpoint: "https://accounts.google.com/.well-known/openid-configuration"
+  name: 'google_oauth2',
+  redirect_uri: 'http://localhost:3000/users/auth/google_oauth2/callback',
+  site_url: 'https://accounts.google.com',
+  token_url: 'https://oauth2.googleapis.com/token',
+  authorize_url: 'https://accounts.google.com/o/oauth2/auth',
+  user_info_url: 'https://openidconnect.googleapis.com/v1/userinfo',
+  user_info_fields: 'id,email,name,first_name,last_name',
+  user_info_id_field: 'id',
+  user_info_username_field: 'email',
+  user_info_email_field: 'email',
+  user_info_first_name_field: 'first_name',
+  user_info_last_name_field: 'last_name',
+  open_id_connect_endpoint: 'https://accounts.google.com/.well-known/openid-configuration'
 )
 
 Sso::Client.create(
-    name: "okta",
-    redirect_uri: "http://localhost:3000/users/auth/okta/callback",
-    site_url: "https://dev-123456.okta.com",
-    token_url: "https://dev-123456.okta.com/oauth2/default/v1/token",
-    authorize_url: "https://dev-123456.okta.com/oauth2/default/v1/authorize",
-    user_info_url: "https://dev-123456.okta.com/oauth2/default/v1/userinfo",
-    user_info_fields: "sub, email, name, given_name, family_name",
-    user_info_id_field: "sub",
-    user_info_username_field: "email",
-    user_info_email_field: "email",
-    user_info_first_name_field: "given_name",
-    user_info_last_name_field: "family_name",
-    open_id_connect_endpoint: "https://dev-123456.okta.com/.well-known/openid-configuration"
+  name: 'facebook',
+  redirect_uri: 'http://localhost:3000/users/auth/facebook/callback',
+  site_url: 'https://www.facebook.com',
+  token_url: 'https://graph.facebook.com/oauth/access_token',
+  authorize_url: 'https://www.facebook.com/v11.0/dialog/oauth',
+  user_info_url: 'https://graph.facebook.com/me?fields=id,email,name,first_name,last_name',
+  user_info_fields: 'id,email,name,first_name,last_name',
+  user_info_id_field: 'id',
+  user_info_username_field: 'email',
+  user_info_email_field: 'email',
+  user_info_first_name_field: 'first_name',
+  user_info_last_name_field: 'last_name',
+  open_id_connect_endpoint: 'https://www.facebook.com/.well-known/openid-configuration'
+)
+
+Sso::Client.create(
+  name: 'okta',
+  redirect_uri: 'http://localhost:3000/users/auth/okta/callback',
+  site_url: 'https://okta-dev-29807662.okta.com',
+  token_url: 'https://okta-dev-29807662.okta.com/oauth2/default/v1/token',
+  authorize_url: 'https://okta-dev-29807662.okta.com/oauth2/default/v1/authorize',
+  user_info_url: 'https://okta-dev-29807662.okta.com/oauth2/default/v1/userinfo',
+  user_info_fields: 'sub,email,name,preferred_username,given_name,family_name',
+  user_info_id_field: 'sub',
+  user_info_username_field: 'preferred_username',
+  user_info_email_field: 'email',
+  user_info_first_name_field: 'given_name',
+  user_info_last_name_field: 'family_name',
+  open_id_connect_endpoint: 'https://okta-dev-29807662.okta.com/oauth2/default/.well-known/openid-configuration'
 )

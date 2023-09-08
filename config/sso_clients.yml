@@ -1,0 +1,34 @@
+---
+- :name: google_oauth2
+  :data:
+    :client_id: 9
+    :redirect_uri: http://localhost:3000/users/auth/google_oauth2/callback
+    :issuer: https://accounts.google.com/.well-known/openid-configuration
+    :client_options:
+      :site: https://accounts.google.com
+      :redirect_uri: http://localhost:3000/users/auth/google_oauth2/callback
+      :authorization_endpoint: https://accounts.google.com/o/oauth2/auth
+      :token_endpoint: https://oauth2.googleapis.com/token
+      :user_info_endpoint: https://openidconnect.googleapis.com/v1/userinfo
+- :name: okta
+  :data:
+    :client_id: 11
+    :redirect_uri: http://localhost:3000/users/auth/okta/callback
+    :issuer: https://okta-dev-29807662.okta.com/oauth2/default/.well-known/openid-configuration
+    :client_options:
+      :site: https://okta-dev-29807662.okta.com
+      :redirect_uri: http://localhost:3000/users/auth/okta/callback
+      :authorization_endpoint: https://okta-dev-29807662.okta.com/oauth2/default/v1/authorize
+      :token_endpoint: https://okta-dev-29807662.okta.com/oauth2/default/v1/token
+      :user_info_endpoint: https://okta-dev-29807662.okta.com/oauth2/default/v1/userinfo
+- :name: facebook
+  :data:
+    :client_id: 10
+    :redirect_uri: http://localhost:3000/users/auth/facebook/callback
+    :issuer: https://www.facebook.com/.well-known/openid-configuration
+    :client_options:
+      :site: https://www.facebook.com
+      :redirect_uri: http://localhost:3000/users/auth/facebook/callback
+      :authorization_endpoint: https://www.facebook.com/v11.0/dialog/oauth
+      :token_endpoint: https://graph.facebook.com/oauth/access_token
+      :user_info_endpoint: https://graph.facebook.com/me?fields=id,email,name,first_name,last_name

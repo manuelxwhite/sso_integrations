@@ -8,6 +8,7 @@
 #
 # Use this hook to configure devise mailer, warden hooks and so forth.
 # Many of these configuration options can be set straight in your model.
+
 Devise.setup do |config|
   # The secret key used by Devise. Devise uses this key to generate
   # random tokens. Changing this key will render invalid all existing
@@ -271,21 +272,29 @@ Devise.setup do |config|
   # ==> OmniAuth
   # Add a new OmniAuth provider. Check the wiki for more information on setting
   # up on your models and hooks.
-  config.omniauth :google_oauth2, ENV["GOOGLE_AUTH2_CLIENT_ID"], ENV["GOOGLE_AUTH2_CLIENT_SECRET"]
-  config.omniauth(:okta,
-                  ENV['OKTA_CLIENT_ID'],
-                  ENV['OKTA_CLIENT_SECRET'],
-                  scope: 'openid profile email',
-                  fields: ['profile', 'email'],
-                  client_options: {
-                    site:          ENV['OKTA_ORG_URL'],
-                    authorize_url: "#{ENV['OKTA_ORG_URL']}/oauth2/default/v1/authorize",
-                    token_url:     "#{ENV['OKTA_ORG_URL']}/oauth2/default/v1/token",
-                    user_info_url: "#{ENV['OKTA_ORG_URL']}/oauth2/default/v1/userinfo",
-                  },
-                  strategy_class: OmniAuth::Strategies::Okta)
+  # config.omniauth :google_oauth2, ENV["GOOGLE_AUTH2_CLIENT_ID"], ENV["GOOGLE_AUTH2_CLIENT_SECRET"]
 
+  sso_clients = YAML.load_file("#{Rails.root}/config/sso_clients.yml")
 
+  sso_clients.each do |sso_client|
+    sso_client_id = ENV["#{sso_client[:name].upcase}_CLIENT_ID"]
+    sso_client_secret = ENV["#{sso_client[:name].upcase}_CLIENT_SECRET"]
+
+    next unless sso_client_id.present? && sso_client_secret.present?
+
+    config.omniauth(
+      sso_client[:name],
+      ENV["#{sso_client[:name].upcase}_CLIENT_ID"],
+      ENV["#{sso_client[:name].upcase}_CLIENT_SECRET"],
+      client_options: {
+        site: sso_client.dig(:data, :client_options, :site),
+        redirect_uri: "http://localhost:3000/users/auth/#{sso_client[:name]}/callback",
+        authorize_url: sso_client[:data][:client_options][:authorization_endpoint],
+        token_url: sso_client[:data][:client_options][:token_endpoint],
+        user_info_url: sso_client[:data][:client_options][:userinfo_endpoint]
+      }
+    )
+  end
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or
   # change the failure app, you can configure them inside the config.warden block.

@@ -1,0 +1,154 @@
+<div class="w-3/4 mx-auto">
+    <h2 class="text-4xl font-bold dark:text-white mx-auto mb-8">SSO Client Details</h2>
+
+
+    <div class="w-full relative overflow-x-auto shadow-md sm:rounded-lg">
+        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <tr>
+                    <th scope="col" class="px-6 py-3">
+                        Property
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                       Value
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+
+                <tr class="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
+                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                      SSO Client
+                    </th>
+                    <td class="px-6 py-4">
+                      <%= client.name %>
+                    </td>
+                </tr>
+                <tr class="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
+                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                      Redirect URL
+                    </th>
+                    <td class="px-6 py-4">
+                      <%= client.redirect_uri %>
+                    </td>
+                </tr>
+                <tr class="bg-white border-b dark:bg-gray-900 dark:border-gray-700">                    
+                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                      Site URL
+                    </th>
+                    <td class="px-6 py-4">
+                      <%= client.site_url %>
+                    </td>                                        
+                </tr>
+                <tr class="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
+                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                      Authorize url
+                    </th>
+                    <td class="px-6 py-4">
+                      <%= client.authorize_url %>
+                    </td>
+                </tr>
+                <tr class="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
+                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                      Info URL
+                    </th>
+                    <td class="px-6 py-4">
+                      <%= client.user_info_url %>
+                    </td>
+                </tr>
+                <tr class="bg-white border-b dark:bg-gray-900 dark:border-gray-700">                    
+                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                      Info Fields
+                    </th>
+                    <td class="px-6 py-4">
+                      <%= client.user_info_fields  %>
+                    </td>                                        
+                </tr>
+                <tr class="bg-white border-b dark:bg-gray-900 dark:border-gray-700">                    
+                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                     ID Field
+                    </th>
+                    <td class="px-6 py-4">
+                      <%= client.user_info_id_field  %>
+                    </td>                                        
+                </tr>
+                <tr class="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
+                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                      username Field
+                    </th>
+                    <td class="px-6 py-4">
+                      <%= client.user_info_username_field %>
+                    </td>
+                </tr>
+                <tr class="bg-white border-b dark:bg-gray-900 dark:border-gray-700">                    
+                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                      E-Mail Field
+                    </th>
+                    <td class="px-6 py-4">
+                      <%= client.user_info_email_field  %>
+                    </td>                                        
+                </tr>
+                <tr class="bg-white border-b dark:bg-gray-900 dark:border-gray-700">                    
+                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                     First Name Field
+                    </th>
+                    <td class="px-6 py-4">
+                      <%= client.user_info_first_name_field  %>
+                    </td>                                        
+                </tr>
+                <tr class="bg-white border-b dark:bg-gray-900 dark:border-gray-700">                    
+                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                      Last Name Field
+                    </th>
+                    <td class="px-6 py-4">
+                      <%= client.user_info_last_name_field  %>
+                    </td>                                        
+                </tr>
+                <tr class="bg-white border-b dark:bg-gray-900 dark:border-gray-700">                    
+                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                     Open ID Connect Endpoint
+                    </th>
+                    <td class="px-6 py-4">
+                      <%= client.open_id_connect_endpoint  %>
+                    </td>                                        
+                </tr>
+                <tr class="bg-white border-b dark:bg-gray-900 dark:border-gray-700">                    
+                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                     <%= client.name.upcase  %>_CLIENT_ID environment variable set?
+                    </th>
+                    <td class="px-6 py-4">
+                      <% if ENV["#{client.name.upcase}_CLIENT_ID"] %>
+                        <span class="inline-flex items-center bg-green-100 text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-green-900 dark:text-green-300">
+                          <span class="w-2 h-2 mr-1 bg-green-500 rounded-full"></span>
+                          Environment Variable is Set
+                        </span>
+                      <% else %>
+                        <span class="inline-flex items-center bg-red-100 text-red-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-red-900 dark:text-red-300">
+                          <span class="w-2 h-2 mr-1 bg-red-500 rounded-full"></span>
+                          Environment Variable is Not Set
+                        </span>
+                      <% end %>
+                    </td>                                      
+                </tr>                   
+                <tr class="bg-white border-b dark:bg-gray-900 dark:border-gray-700">                    
+                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                     <%= client.name.upcase  %>_CLIENT_SECRET environment variable set?
+                    </th>
+                    <td class="px-6 py-4">
+                      <% if ENV["#{client.name.upcase}_CLIENT_SECRET"] %>
+                        <span class="inline-flex items-center bg-green-100 text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-green-900 dark:text-green-300">
+                          <span class="w-2 h-2 mr-1 bg-green-500 rounded-full"></span>
+                          Environment Variable is Set
+                        </span>
+                      <% else %>
+                        <span class="inline-flex items-center bg-red-100 text-red-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-red-900 dark:text-red-300">
+                          <span class="w-2 h-2 mr-1 bg-red-500 rounded-full"></span>
+                          Environment Variable is Not Set
+                        </span>
+                      <% end %>
+                    </td>                                      
+                </tr>                   
+            </tbody>
+        </table>
+    </div>
+</div>

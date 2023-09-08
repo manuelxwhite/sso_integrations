@@ -1,0 +1,84 @@
+  <div class="w-full">
+    <%= form_with(model: sso_client, html: { class: "grid grid-cols-1 gap-8 mx-auto max-w-screen-md sm:grid-cols-2"}) do |form| %>
+      <% if sso_client.errors.any? %>
+        <div style="color: red">
+          <h2><%= pluralize(sso_client.errors.count, "error") %> prohibited this sso_client from being saved:</h2>
+
+          <ul>
+            <% sso_client.errors.each do |error| %>
+              <li><%= error.full_message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <div class="mb-6">
+        <%= form.label :sso_client, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
+        <%= form.text_field :name, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" %>
+      </div>
+
+      <div class="mb-6">
+        <%= form.label :redirect_uri, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
+        <%= form.text_field :redirect_uri, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" %>
+      </div>
+
+      <div class="mb-6">
+        <%= form.label :site_url, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
+        <%= form.text_field :site_url, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" %>
+      </div>
+
+      <div class="mb-6">
+        <%= form.label :token_url, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
+        <%= form.text_field :token_url, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" %>
+      </div>
+
+      <div class="mb-6">
+        <%= form.label :authorize_url, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
+        <%= form.text_field :authorize_url, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" %>
+      </div>
+
+      <div class="mb-6">
+        <%= form.label :user_info_url, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
+        <%= form.text_field :user_info_url, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" %>
+      </div>
+
+      <div class="mb-6">
+        <%= form.label :information_fields, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
+        <%= form.text_field :user_info_fields, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" %>
+      </div>
+
+      <div class="mb-6">
+        <%= form.label :ID_field, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
+        <%= form.text_field :user_info_id_field, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" %>
+      </div>
+
+      <div class="mb-6">
+        <%= form.label :username_field, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
+        <%= form.text_field :user_info_username_field, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" %>
+      </div>
+
+      <div class="mb-6">
+        <%= form.label :email_field, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
+        <%= form.text_field :user_info_email_field, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" %>
+      </div>
+
+      <div class="mb-6">
+        <%= form.label :first_name_field, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
+        <%= form.text_field :user_info_first_name_field, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" %>
+      </div>
+
+      <div class="mb-6">
+        <%= form.label :last_name_field, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
+        <%= form.text_field :user_info_last_name_field, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" %>
+      </div>
+
+      <div class="mb-6">
+        <%= form.label :OpenId_endpoint, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
+        <%= form.text_field :open_id_connect_endpoint, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" %>
+      </div>
+
+      <div>
+        <%= form.submit class: "inline-flex mt-8 items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 mb-8" %>
+      </div>
+    <% end %>
+  </div>

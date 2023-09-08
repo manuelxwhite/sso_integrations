@@ -10,23 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_06_055907) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_06_051917) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-
-  create_table "sso_authorizations", force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.bigint "sso_client_id", null: false
-    t.string "access_token", null: false
-    t.string "refresh_token"
-    t.datetime "expires_at"
-    t.string "scope"
-    t.string "state"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["sso_client_id"], name: "index_sso_authorizations_on_sso_client_id"
-    t.index ["user_id"], name: "index_sso_authorizations_on_user_id"
-  end
 
   create_table "sso_clients", force: :cascade do |t|
     t.string "name", null: false
@@ -66,6 +52,4 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_06_055907) do
     t.index ["username"], name: "index_users_on_username", unique: true
   end
 
-  add_foreign_key "sso_authorizations", "sso_clients"
-  add_foreign_key "sso_authorizations", "users"
 end
