@@ -10,9 +10,9 @@ Follow these steps to set up and run the project locally.
 
 Before you begin, make sure you have the following prerequisites installed:
 
-- Ruby (>= 2.7)
-- Ruby on Rails (>= 6.0)
-- PostgreSQL (>= 9.6)
+- Ruby (>= 3.1.2)
+- Ruby on Rails (>= Rails 7.0.7.2)
+- PostgreSQL (>= 14.0.0)
 
 ### Installation
 
