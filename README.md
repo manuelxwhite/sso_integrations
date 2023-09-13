@@ -43,8 +43,8 @@ To run the project, you need to define environment variables for each SSO provid
 
 ### Google OAuth2
 
-- `GOOGLE_CLIENT_OAUTH2_ID`: Your Google OAuth2 client ID.
-- `GOOGLE_CLIENT_OAUTH2_SECRET`: Your Google OAuth2 client secret.
+- `GOOGLE_OAUTH2_CLIENT_ID`: Your Google OAuth2 client ID.
+- `GOOGLE_OAUTH2_CLIENT_SECRET`: Your Google OAuth2 client secret.
 
 You can obtain these credentials by creating a project in the [Google Developers Console](https://console.developers.google.com/) and configuring OAuth2 credentials.
 
