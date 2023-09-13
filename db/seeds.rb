@@ -6,7 +6,12 @@
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
 
-Sso::Client.create(
+def create_or_update_sso_client(client_params)
+  client = Sso::Client.find_or_initialize_by(name: client_params[:name])
+  client.update(client_params)
+end
+
+create_or_update_sso_client(
   name: 'google_oauth2',
   redirect_uri: 'http://localhost:3000/users/auth/google_oauth2/callback',
   site_url: 'https://accounts.google.com',
@@ -22,7 +27,7 @@ Sso::Client.create(
   open_id_connect_endpoint: 'https://accounts.google.com/.well-known/openid-configuration'
 )
 
-Sso::Client.create(
+create_or_update_sso_client(
   name: 'facebook',
   redirect_uri: 'http://localhost:3000/users/auth/facebook/callback',
   site_url: 'https://www.facebook.com',
@@ -38,7 +43,7 @@ Sso::Client.create(
   open_id_connect_endpoint: 'https://www.facebook.com/.well-known/openid-configuration'
 )
 
-Sso::Client.create(
+create_or_update_sso_client(
   name: 'okta',
   redirect_uri: 'http://localhost:3000/users/auth/okta/callback',
   site_url: 'https://okta-dev-29807662.okta.com',
@@ -53,3 +58,12 @@ Sso::Client.create(
   user_info_last_name_field: 'family_name',
   open_id_connect_endpoint: 'https://okta-dev-29807662.okta.com/oauth2/default/.well-known/openid-configuration'
 )
+
+
+User.find_or_create_by(email: 'admin@admin.com') do |user|
+  user.password = 'password'
+  user.username = 'admin'
+  user.first_name = 'Adam'
+  user.last_name = 'West'
+  user.admin = true
+end
