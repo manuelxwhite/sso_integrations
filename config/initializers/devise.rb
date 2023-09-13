@@ -284,9 +284,12 @@ Devise.setup do |config|
 
     config.omniauth(
       sso_client[:name],
-      ENV["#{sso_client[:name].upcase}_CLIENT_ID"],
-      ENV["#{sso_client[:name].upcase}_CLIENT_SECRET"],
+      sso_client_id,
+      sso_client_secret,
+      scope: "openid profile email",
       client_options: {
+        client_id: sso_client_id,
+        client_secret: sso_client_secret,
         site: sso_client.dig(:data, :client_options, :site),
         redirect_uri: "http://localhost:3000/users/auth/#{sso_client[:name]}/callback",
         authorize_url: sso_client[:data][:client_options][:authorization_endpoint],
