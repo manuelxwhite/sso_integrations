@@ -1,7 +1,7 @@
 ---
 - :name: google_oauth2
   :data:
-    :client_id: 72
+    :client_id: 97
     :redirect_uri: http://localhost:3000
     :issuer: http://localhost:3000
     :client_options:
