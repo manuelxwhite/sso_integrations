@@ -1,5 +1,14 @@
 class User < ApplicationRecord
-  # ... (other code)
+  devise :database_authenticatable, :registerable,
+  :recoverable, :rememberable, :validatable,
+  :omniauthable, omniauth_providers: Sso::Client.all.map(&:name)
+
+  validates :username, presence: true, uniqueness: true
+  validates :first_name, presence: true
+  validates :last_name, presence: true
+  validates :email, presence: true, uniqueness: true
+
+  has_person_name
 
   def self.create_data_from_provider(provider_data)
     sso_client = Sso::Client.find_by(name: provider_data.provider)
