@@ -25,7 +25,7 @@ class OmniauthController < Devise::OmniauthCallbacksController
   end
 
   def handle_sign_in_failure(provider_name)
-    flash[:error] = "There was a problem signing you in through #{provider_name.capitalize}." \
+    flash[:error] = "There was a problem signing you in through #{provider_name.capitalize}. " \
      'Please register or try signing in later.'
     redirect_to new_user_registration_url
   end

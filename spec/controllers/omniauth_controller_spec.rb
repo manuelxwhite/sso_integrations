@@ -47,10 +47,10 @@ RSpec.describe OmniauthController, type: :controller do
 
           get "#{client.name.downcase}_omniauth_callback"
           expect(response).to redirect_to(new_user_registration_path)
-          expect(flash[:error]).to eq("There was a problem signing you in through #{client.name.capitalize}. Please register or try signing in later.")
+          expect(flash[:error]).to eq("There was a problem signing you in through #{client.name.capitalize}. " \
+            'Please register or try signing in later.')
         end
       end
     end
   end
-
 end
