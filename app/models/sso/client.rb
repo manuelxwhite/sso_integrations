@@ -8,6 +8,8 @@ module Sso
 
     after_save :save_sso_clients_yml
 
+    attr_reader :client_id, :client_secret
+
     def omniauth_config
       {
         name:,
@@ -31,8 +33,6 @@ module Sso
       Sso::StaticFile.save_clients_yml
     end
 
-    private
-
     def client_id
       ENV["#{name.upcase}_CLIENT_ID"]
     end
@@ -40,6 +40,8 @@ module Sso
     def client_secret
       ENV["#{name.upcase}_CLIENT_SECRET"]
     end
+
+    private
 
     def static_fields
       {

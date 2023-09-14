@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Sso::Client, type: :model do
+  subject { FactoryBot.build(:sso_client, name: :google_oauth3) }
   describe 'validations' do
     let(:client_params) { FactoryBot.attributes_for(:sso_client) }
 
@@ -67,21 +68,21 @@ RSpec.describe Sso::Client, type: :model do
     end
   end
 
-  describe 'on save' do
-    it 'calls save_sso_clients_yml' do
-      expect_any_instance_of(described_class).to receive(:save_sso_clients_yml)
-      FactoryBot.create(:sso_client)
-    end
-
-    context 'when sso_clients.yml already exists' do
-      let(:existing_sso_client) { FactoryBot.create(:sso_client, name: 'existing_client') }
-
-      it 'updates the file' do
-        yml_file = Rails.root.join('config', 'sso_clients.yml')
-        expect do
-          existing_sso_client.update(name: 'updated_client')
-        end.to(change { File.mtime(yml_file) })
-      end
+  describe 'after_save callback' do
+    it 'triggers the save_sso_clients_yml method' do
+      expect(subject).to receive(:save_sso_clients_yml)
+      subject.save!
     end
   end
+
+
+
+  describe '#save_sso_clients_yml' do
+    it 'calls Sso::StaticFile.save_clients_yml' do
+      expect(Sso::StaticFile).to receive(:save_clients_yml)
+      subject.send(:save_sso_clients_yml)
+    end
+  end
+
+
 end
