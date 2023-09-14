@@ -8,8 +8,6 @@ module Sso
 
     after_save :save_sso_clients_yml
 
-    attr_reader :client_id, :client_secret
-
     def omniauth_config
       {
         name:,

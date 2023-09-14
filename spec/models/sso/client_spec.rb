@@ -75,14 +75,10 @@ RSpec.describe Sso::Client, type: :model do
     end
   end
 
-
-
   describe '#save_sso_clients_yml' do
     it 'calls Sso::StaticFile.save_clients_yml' do
       expect(Sso::StaticFile).to receive(:save_clients_yml)
       subject.send(:save_sso_clients_yml)
     end
   end
-
-
 end
