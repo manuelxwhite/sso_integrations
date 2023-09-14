@@ -31,11 +31,12 @@ Before you begin, make sure you have the following prerequisites installed:
     ```shell
     bundle install
 
-4. Create the database and run the migrations:
+4. Create the database and run the migrations and seeds(optional):
 
     ```shell
     rails db:create
     rails db:migrate
+    rails db:seed
 
 ## Environment Variables
 
