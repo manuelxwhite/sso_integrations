@@ -1,5 +1,5 @@
 class OmniauthController < Devise::OmniauthCallbacksController
-  skip_before_action :verify_authenticity_token
+
 
   def generic_callback
     provider_name = request.env['omniauth.auth'].provider
