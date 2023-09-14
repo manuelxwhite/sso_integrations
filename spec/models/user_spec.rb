@@ -17,9 +17,9 @@ RSpec.describe User, type: :model do
           }
         )
 
-        expect {
+        expect do
           User.create_data_from_provider(provider_data)
-        }.to change(User, :count).by(1)
+        end.to change(User, :count).by(1)
       end
 
       it 'sets the user attributes correctly' do
@@ -39,7 +39,7 @@ RSpec.describe User, type: :model do
           first_name: 'John',
           last_name: 'Doe',
           email: 'test@example.com',
-          username: 'test@example.com',  # Assuming you want to set username to the email
+          username: 'test@example.com', # Assuming you want to set username to the email
           provider: 'google_oauth2',
           uid: '123456'
         )
@@ -58,11 +58,11 @@ RSpec.describe User, type: :model do
           }
         )
 
-        User.create_data_from_provider(provider_data)  # Create the user initially
+        User.create_data_from_provider(provider_data) # Create the user initially
 
-        expect {
+        expect do
           User.create_data_from_provider(provider_data)
-        }.not_to change(User, :count)
+        end.not_to change(User, :count)
       end
 
       it 'returns the existing user' do
@@ -76,7 +76,7 @@ RSpec.describe User, type: :model do
           }
         )
 
-        existing_user = User.create_data_from_provider(provider_data)  # Create the user initially
+        existing_user = User.create_data_from_provider(provider_data) # Create the user initially
         user = User.create_data_from_provider(provider_data)
 
         expect(user).to eq(existing_user)

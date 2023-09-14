@@ -1,40 +1,29 @@
-# app/models/user.rb
 class User < ApplicationRecord
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable,
-         :omniauthable, omniauth_providers: Sso::Client.all.map(&:name)
-
-  validates :username, presence: true, uniqueness: true
-  validates :first_name, presence: true
-  validates :last_name, presence: true
-  validates :email, presence: true, uniqueness: true
-
-  has_person_name
+  # ... (other code)
 
   def self.create_data_from_provider(provider_data)
     sso_client = Sso::Client.find_by(name: provider_data.provider)
 
-    field_mapping = {
-      email: sso_client.user_info_email_field,
-      first_name: sso_client.user_info_first_name_field,
-      last_name: sso_client.user_info_last_name_field,
-    }
+    user_attributes = map_provider_attributes(provider_data, sso_client)
 
-    attributes = {
-      provider: provider_data.provider,
-      uid: provider_data.uid
-    }
-
-    field_mapping.each do |user_attribute, provider_attribute|
-      attributes[user_attribute] = provider_data.info[provider_attribute.to_sym]
-    end
-
-    where(provider: provider_data.provider, uid: provider_data.uid).first_or_create do |user|
-      user.email = attributes[:email]
+    where(provider: provider_data.provider, uid: provider_data.uid)
+      .first_or_create(user_attributes) do |user|
+      user.email = user_attributes[:email]
       user.password = Devise.friendly_token[0, 20]
-      user.first_name = attributes[:first_name]
-      user.last_name = attributes[:last_name]
-      user.username = attributes[:email]
+      user.username = user_attributes[:email]
     end
+  end
+
+  def self.map_provider_attributes(provider_data, sso_client)
+    field_mapping = {
+      email: sso_client&.user_info_email_field,
+      first_name: sso_client&.user_info_first_name_field,
+      last_name: sso_client&.user_info_last_name_field
+    }
+
+    field_mapping.transform_keys(&:to_sym)
+                 .transform_values { |value| provider_data.info[value.to_sym] }
+                 .compact
+                 .merge(provider: provider_data.provider, uid: provider_data.uid)
   end
 end
