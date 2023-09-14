@@ -56,6 +56,7 @@ group :development, :test do
   gem 'rubocop', require: false
   gem 'factory_bot_rails'
   gem 'dotenv-rails'
+  gem 'pry-nav'
 end
 
 group :development do

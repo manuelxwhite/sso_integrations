@@ -1,9 +1,14 @@
 class OmniauthController < Devise::OmniauthCallbacksController
-  sso_clients.each do |client|
-    next unless client.client_and_secret?
+  skip_before_action :verify_authenticity_token
 
-    define_method client.name.downcase.to_sym do
-      handle_oauth_callback(client.name.downcase)
+  def generic_callback
+    provider_name = request.env['omniauth.auth'].provider
+    @user = User.create_data_from_provider(request.env['omniauth.auth'])
+
+    if @user.persisted?
+      handle_successful_sign_in(provider_name)
+    else
+      handle_sign_in_failure(provider_name)
     end
   end
 
@@ -14,19 +19,14 @@ class OmniauthController < Devise::OmniauthCallbacksController
 
   private
 
-  def handle_oauth_callback(provider)
-    @user = User.create_data_from_provider(request.env['omniauth.auth'])
-    if @user.persisted?
-      sign_in_and_redirect @user
-      set_flash_message(:notice, :success, kind: provider.capitalize) if is_navigational_format?
-    else
-      flash[:error] =
-        "There was a problem signing you in through #{provider.capitalize}. Please register or try signing in later."
-      redirect_to new_user_registration_url
-    end
+  def handle_successful_sign_in(provider_name)
+    sign_in_and_redirect @user
+    set_flash_message(:notice, :success, kind: provider_name.capitalize) if is_navigational_format?
   end
 
-  def sso_clients
-    Sso::Client.all
+  def handle_sign_in_failure(provider_name)
+    flash[:error] = "There was a problem signing you in through #{provider_name.capitalize}." \
+     'Please register or try signing in later.'
+    redirect_to new_user_registration_url
   end
 end
