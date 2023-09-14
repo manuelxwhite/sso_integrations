@@ -30,7 +30,7 @@ RSpec.describe OmniauthController, type: :controller do
           expect(User).to receive(:create_data_from_provider).with(instance_of(OmniAuth::AuthHash)).and_return(user)
           expect(user).to receive(:persisted?).and_return(true)
 
-          get "#{client.name.downcase}_omniauth_callback"
+          get client.name.downcase.to_sym
           expect(response).to redirect_to(root_path)
           expect(flash[:notice]).to eq("Successfully signed in through #{client.name.capitalize}")
         end
@@ -45,12 +45,19 @@ RSpec.describe OmniauthController, type: :controller do
           expect(User).to receive(:create_data_from_provider).with(instance_of(OmniAuth::AuthHash)).and_return(user)
           expect(user).to receive(:persisted?).and_return(false)
 
-          get "#{client.name.downcase}_omniauth_callback"
+          get client.name.downcase.to_sym
           expect(response).to redirect_to(new_user_registration_path)
-          expect(flash[:error]).to eq("There was a problem signing you in through #{client.name.capitalize}. " \
-            'Please register or try signing in later.')
+          expect(flash[:error]).to eq("There was a problem signing you in through #{client.name.capitalize}. Please register or try signing in later.")
         end
       end
+    end
+  end
+
+  describe 'failure' do
+    it 'redirects to registration with an error flash message' do
+      get :failure
+      expect(response).to redirect_to(new_user_registration_path)
+      expect(flash[:error]).to eq('There was a problem signing you in. Please register or try signing in later.')
     end
   end
 end

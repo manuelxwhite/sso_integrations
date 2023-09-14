@@ -281,20 +281,13 @@ Devise.setup do |config|
     sso_client_secret = ENV["#{sso_client[:name].upcase}_CLIENT_SECRET"]
 
     next unless sso_client_id.present? && sso_client_secret.present?
-
     config.omniauth(
       sso_client[:name],
       sso_client_id,
       sso_client_secret,
-      scope: "openid profile email",
-      client_options: {
-        client_id: sso_client_id,
-        client_secret: sso_client_secret,
-        site: sso_client.dig(:data, :client_options, :site),
-        redirect_uri: "http://localhost:3000/users/auth/#{sso_client[:name]}/callback",
-        authorize_url: sso_client[:data][:client_options][:authorization_endpoint],
-        token_url: sso_client[:data][:client_options][:token_endpoint],
-        user_info_url: sso_client[:data][:client_options][:userinfo_endpoint]
+      {
+        scope: 'openid profile email',
+        redirect_uri: "http://localhost:3000/users/auth/#{sso_client[:name].downcase}/callback",
       }
     )
   end
