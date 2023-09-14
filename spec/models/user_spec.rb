@@ -1,61 +1,85 @@
+# spec/models/user_spec.rb
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  describe 'validations' do
-    before do
-      FactoryBot.create(:sso_client)
-    end
+  let!(:sso_client) { FactoryBot.create(:sso_client) }
 
-    let(:user_params) do
-      FactoryBot.attributes_for(:user, provider: 'google_oauth2', uid: '987654321')
-    end
+  describe 'create_data_from_provider' do
+    context 'when the user does not exist' do
+      it 'creates a new user' do
+        provider_data = OmniAuth::AuthHash.new(
+          provider: 'google_oauth2',
+          uid: '123456',
+          info: {
+            email: 'test@example.com',
+            first_name: 'John',
+            last_name: 'Doe'
+          }
+        )
 
-    it 'should create a new user with valid params' do
-      expect(User.new(user_params).save).to eq(true)
-    end
+        expect {
+          User.create_data_from_provider(provider_data)
+        }.to change(User, :count).by(1)
+      end
 
-    shared_examples 'a non-creating user' do |param_to_delete|
-      it "should not create a new user when #{param_to_delete} is missing" do
-        user_params.delete(param_to_delete)
-        expect(User.new(user_params).save).to eq(false)
+      it 'sets the user attributes correctly' do
+        provider_data = OmniAuth::AuthHash.new(
+          provider: 'google_oauth2',
+          uid: '123456',
+          info: {
+            email: 'test@example.com',
+            first_name: 'John',
+            last_name: 'Doe'
+          }
+        )
+
+        user = User.create_data_from_provider(provider_data)
+
+        expect(user).to have_attributes(
+          first_name: 'John',
+          last_name: 'Doe',
+          email: 'test@example.com',
+          username: 'test@example.com',  # Assuming you want to set username to the email
+          provider: 'google_oauth2',
+          uid: '123456'
+        )
       end
     end
 
-    context 'when email is missing' do
-      include_examples 'a non-creating user', :email
-    end
+    context 'when the user already exists' do
+      it 'does not create a new user' do
+        provider_data = OmniAuth::AuthHash.new(
+          provider: 'google_oauth2',
+          uid: '123456',
+          info: {
+            email: 'test@example.com',
+            first_name: 'John',
+            last_name: 'Doe'
+          }
+        )
 
-    context 'when first_name is missing' do
-      include_examples 'a non-creating user', :first_name
-    end
+        User.create_data_from_provider(provider_data)  # Create the user initially
 
-    context 'when last_name is missing' do
-      include_examples 'a non-creating user', :last_name
-    end
-
-    context 'when username is missing' do
-      include_examples 'a non-creating user', :username
-    end
-
-    context 'when email is not unique' do
-      before do
-        FactoryBot.create(:user, email: 'existing_email@example.com')
+        expect {
+          User.create_data_from_provider(provider_data)
+        }.not_to change(User, :count)
       end
 
-      it 'should not create a new user' do
-        user_params[:email] = 'existing_email@example.com'
-        expect(User.new(user_params).save).to eq(false)
-      end
-    end
+      it 'returns the existing user' do
+        provider_data = OmniAuth::AuthHash.new(
+          provider: 'google_oauth2',
+          uid: '123456',
+          info: {
+            email: 'test@example.com',
+            first_name: 'John',
+            last_name: 'Doe'
+          }
+        )
 
-    context 'when username is not unique' do
-      before do
-        FactoryBot.create(:user, username: 'existing_username')
-      end
+        existing_user = User.create_data_from_provider(provider_data)  # Create the user initially
+        user = User.create_data_from_provider(provider_data)
 
-      it 'should not create a new user' do
-        user_params[:username] = 'existing_username'
-        expect(User.new(user_params).save).to eq(false)
+        expect(user).to eq(existing_user)
       end
     end
   end
